@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.epeibao.dao.ComprehensiveAssessmentDao">
+
+	<sql id="Base_Column_List">
+		ComprehensiveAssessmentID, DriverID, TaximeterDeadline,
+		NextBackToCompanyTime,
+		ifVehicleMaintenanceAssessment,
+		ifPaymentAssessment, ifExamine, ifDataAcquisition,
+		ifComprehensiveAssessment
+	</sql>
+
+	<select id="driverIdByComprehensiveAssessmentID" resultType="com.epeibao.po.ComprehensiveAssessment"
+		parameterType="String">
+		select
+		ComprehensiveAssessmentID,DriverID,TaximeterDeadline,NextBackToCompanyTime,ifVehicleMaintenanceAssessment,
+		ifPaymentAssessment,ifExamine,ifDataAcquisition,ifComprehensiveAssessment
+		from ComprehensiveAssessment
+		where DriverID=#{driverId}
+	</select>
+
+
+	<select id="comprehensiveAssessmentIdByInfo" resultType="com.epeibao.po.ComprehensiveAssessment"
+		parameterType="String">
+		select
+		ComprehensiveAssessmentID,DriverID,TaximeterDeadline,NextBackToCompanyTime,ifVehicleMaintenanceAssessment,
+		ifPaymentAssessment,ifExamine,ifDataAcquisition,ifComprehensiveAssessment
+		from ComprehensiveAssessment
+		where
+		ComprehensiveAssessmentID=#{comprehensiveAssessmentID}
+	</select>
+
+	<select id="findByDriverId" resultType="com.epeibao.po.ComprehensiveAssessment"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from ComprehensiveAssessment
+		where
+		DriverID=#{driverId,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findByComprehensiveAssessmentId" resultType="com.epeibao.po.ComprehensiveAssessment"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from ComprehensiveAssessment
+		where ComprehensiveAssessmentID =
+		#{comprehensiveassessmentid,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteComprehensiveAssessment" parameterType="java.lang.String">
+		delete
+		from ComprehensiveAssessment
+		where ComprehensiveAssessmentID =
+		#{comprehensiveassessmentid,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insertComprehensiveAssessment" parameterType="com.epeibao.po.ComprehensiveAssessment">
+		insert
+		into ComprehensiveAssessment (ComprehensiveAssessmentID,
+		DriverID,
+		TaximeterDeadline, NextBackToCompanyTime,
+		ifVehicleMaintenanceAssessment, ifPaymentAssessment,
+		ifExamine,
+		ifDataAcquisition, ifComprehensiveAssessment
+		)
+		values
+		(#{comprehensiveassessmentID,jdbcType=VARCHAR},
+		#{driverid,jdbcType=VARCHAR},
+		#{taximeterdeadline,jdbcType=TIMESTAMP},
+		#{nextbacktocompanytime,jdbcType=TIMESTAMP},
+		#{ifvehiclemaintenanceassessment,jdbcType=TINYINT},
+		#{ifpaymentassessment,jdbcType=TINYINT},
+		#{ifexamine,jdbcType=TINYINT}, #{ifdataacquisition,jdbcType=TINYINT},
+		#{ifcomprehensiveassessment,jdbcType=TINYINT}
+		)
+	</insert>
+	<update id="updateComprehensiveAssessment"  parameterType="com.epeibao.po.ComprehensiveAssessment">
+		update
+		ComprehensiveAssessment
+		set DriverID = #{driverID},
+		TaximeterDeadline = #{taximeterDeadline},
+		NextBackToCompanyTime = #{nextBackToCompanyTime},
+		ifVehicleMaintenanceAssessment =
+		#{ifVehicleMaintenanceAssessment},
+		ifPaymentAssessment = #{ifPaymentAssessment},
+		ifExamine = #{ifExamine},
+		ifDataAcquisition =
+		#{ifDataAcquisition},
+		ifComprehensiveAssessment =
+		#{ifComprehensiveAssessment}
+		where
+		ComprehensiveAssessmentID =
+		#{comprehensiveAssessmentID}
+	</update>
+	<select id="findByDriverIdDesc" resultType="java.lang.String"
+		parameterType="java.lang.String">
+		select top 6 ComprehensiveAssessmentID from
+		ComprehensiveAssessment where driverId =#{driverId,jdbcType=VARCHAR}
+		order by
+		ComprehensiveAssessmentID Desc;
+	</select>
+	
+	<select id="findByComprehensive" resultType="java.lang.String"
+	parameterType="java.lang.String">
+	   select ComprehensiveAssessmentID from ComprehensiveAssessment
+	   where ComprehensiveAssessmentID like #{str}+'%'
+	</select>
+
+</mapper>

@@ -1,0 +1,24 @@
+* {
+	margin: 0;
+	padding: 0
+}
+.divbar,.divcut {
+	
+	width: 1160px;
+	
+}
+.divpie {
+	width: 287px;
+	height: 300px;
+	float: left;
+}
+
+.divbar {
+	height: 200px;
+}
+
+.divcut{
+	height: 5px;
+	clear: both;
+	background-color: #C5DDF1;
+}

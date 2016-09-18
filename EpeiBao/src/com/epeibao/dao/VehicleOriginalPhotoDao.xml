@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.epeibao.dao.VehicleOriginalPhotoDao">
+
+	<insert id="insertVehicleOriginalPhoto" parameterType="com.epeibao.po.VehicleOriginalPhoto">
+		insert
+		into
+		VehicleOriginalPhoto
+		(BusNumber,Phototype,PhotoData,UpTime,Cause)
+		values(#{busNumber},#{Phototype},#{PhotoData},#{UpTime},#{Cause});
+
+	</insert>
+
+	<delete id="deleteVehicleOriginalPhoto" parameterType="int">
+
+		delete
+		from
+		vehiclemaintenance where ComprehensiveAssessmentID =
+		#{ComprehensiveAssessmentID};
+	</delete>
+
+	<update id="updateVehicleOriginalPhoto" parameterType="com.epeibao.po.VehicleOriginalPhoto">
+		update
+		VehicleOriginalPhoto set
+		BusNumber=#{busNumber},Phototype=#{Phototype},PhotoData=#{PhotoData},UpTime=#{UpTime},Cause=#{Cause});
+	</update>
+
+	<!-- <resultMap type="java.util.LinkedHashMap" id="photoTypeMap">
+		<result column="Phototype" property="phototype" />
+	</resultMap> -->
+	<select id="getPhotoType" parameterType="String" resultType="java.util.LinkedHashMap">
+
+
+		select Phototype from VehicleOriginalPhoto where
+		VehicleOriginalPhotoBatchId=(
+		select max(VehicleOriginalPhotoBatchId)
+		from VehicleOriginalPhoto where
+		BusNumber=#{BusNumber})
+		and
+		BusNumber=#{BusNumber};
+
+
+	</select>
+
+	<select id="getMaxBatchId" resultType="int">
+		select
+		max(VehicleOriginalPhotoBatchId) from
+		VehicleOriginalPhoto
+	</select>
+</mapper>

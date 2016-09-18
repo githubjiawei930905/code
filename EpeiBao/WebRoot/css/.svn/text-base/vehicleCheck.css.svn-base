@@ -1,0 +1,24 @@
+@charset "utf-8";
+/* CSS Document */
+*{margin:0px; padding: 0px;}
+#box{width: 1150px; margin-left: 10px;}
+#top{ margin-top: 6px;}
+#top ul li{float:left; width:140px; height:40px; border: 1px solid #41719C;  line-height: 40px;
+  text-align: center; border-radius:5px 5px 5px 5px; list-style:none; margin: 5px;}
+#top ul li a{color: #48C7F5; font-size: 28px; text-decoration: none;}
+#top form{ float: left; margin-top: 5px;}
+#top form input{width:425px; height:40px; font-size: 22px; text-align: center; border-radius:5px 5px 5px 5px;}
+#weishenhe table{width: 1150px; font-size: 22px; text-align: center;}
+#weishenhe table tr:nth-child(2n){background-color:#D2DEEF; }
+#weishenhe table tr:nth-child(2n+1){background-color:#EAEFF7; }
+#weishenhe table tr td{color: black;  line-height:75px; height:75px;  }
+#weishenhe table tr th{height:50px;color: white; text-align: center; background-color: #5B9BD5; border-bottom: 3px solid #FFFFFF; }
+#weishenhe table tr td a{text-decoration: none; color: #fff; background-color: #C5DDF1; font-size: 16px; border: 1px solid #41719C; border-radius:5px 5px 5px 5px;}
+
+#shenhe{width: 1150px; display:none; }
+#shenhe table{width: 1150px; font-size: 22px; text-align: center;}
+#shenhe table tr:nth-child(2n){background-color:#D2DEEF; }
+#shenhe table tr:nth-child(2n+1){background-color:#EAEFF7; }
+#shenhe table tr td{color: black;  text-align: center; height:75px; line-height:75px; border-bottom: 1px solid #fff;  }
+#shenhe table tr th{color: white; text-align: center; background-color: #5B9BD5; height: 50px; line-height:47px; border-bottom: 3px solid #FFFFFF;}
+#shenhe table tr td a{text-decoration: none; color:#fff; background-color: #C5DDF1; font-size: 16px; border: 1px solid #41719C; border-radius:5px 5px 5px 5px;}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.epeibao.dao.RolemessageDao" >
+  <resultMap id="BaseResultMap" type="com.epeibao.po.Rolemessage" >
+    <id column="RoleID" property="roleid" jdbcType="VARCHAR" />
+    <result column="ParentRoleID" property="parentroleid" jdbcType="VARCHAR" />
+    <result column="RoleName" property="rolename" jdbcType="NVARCHAR" />
+    <result column="RoleDescribe" property="roledescribe" jdbcType="NVARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    RoleID, ParentRoleID, RoleName, RoleDescribe
+  </sql>
+  
+  <select id="findById" resultType="com.epeibao.po.Rolemessage" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from RoleMessage
+    where RoleID = #{roleid,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteRolemessage" parameterType="java.lang.String" >
+    delete from RoleMessage
+    where RoleID = #{roleid,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertRolemessage" parameterType="com.epeibao.po.Rolemessage" >
+    insert into RoleMessage (RoleID, ParentRoleID, RoleName, 
+      RoleDescribe)
+    values (#{roleid,jdbcType=VARCHAR}, #{parentroleid,jdbcType=VARCHAR}, #{rolename,jdbcType=NVARCHAR}, 
+      #{roledescribe,jdbcType=NVARCHAR})
+  </insert>
+ 
+  <update id="updateRolemessage" parameterType="com.epeibao.po.Rolemessage" >
+    update RoleMessage
+    set ParentRoleID = #{parentroleid,jdbcType=VARCHAR},
+      RoleName = #{rolename,jdbcType=NVARCHAR},
+      RoleDescribe = #{roledescribe,jdbcType=NVARCHAR}
+    where RoleID = #{roleid,jdbcType=VARCHAR}
+  </update>
+</mapper>

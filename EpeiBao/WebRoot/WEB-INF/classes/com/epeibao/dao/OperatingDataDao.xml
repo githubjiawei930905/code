@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.epeibao.dao.OperatingDataDao">
+	<!-- <sql id="Base_Column_List"> ComprehensiveAssessmentID,BusNumber,BoardingTime,AlightingTime,TravlledDistance,WaitTime,DeadheadKilometres,Dealtype,AmountReceivable,IfSuccessCollection 
+		</sql> -->
+	<insert id="saveOperatingDataOne" parameterType="com.epeibao.po.OperatingData">
+		insert into
+		OperatingData(ComprehensiveAssessmentID,BusNumber,BoardingTime,AlightingTime,TravlledDistance,WaitTime,DeadheadKilometres,
+		dealtype,AmountReceivable,IfSend,IfSuccessCollection,collectDate)
+		values(#{comprehensiveAssessmentID,jdbcType=VARCHAR},#{driverID,jdbcType=VARCHAR},
+		#{boardingTime,jdbcType=TIMESTAMP},#{alightingTime,jdbcType=TIMESTAMP},#{travlledDistance,jdbcType=TINYINT},#{waitTime,jdbcType=TIMESTAMP},
+		#{deadheadKilometres,jdbcType=TINYINT},#{dealtype,jdbcType=TINYINT},
+		#{amountReceivable,jdbcType=BIGINT},#{IfSend},#{ifSuccessCollection,jdbcType=TINYINT}
+		,#{collectDate,jdbcType=TIMESTAMP})
+	</insert>
+
+
+	<!--写批量插入数据SQL -->
+	<insert id="addOperatingDataDaoAll">
+		insert into
+		OperatingData(ComprehensiveAssessmentID,BusNumber,BoardingTime,AlightingTime,TravlledDistance,WaitTime,DeadheadKilometres,
+		dealtype,AmountReceivable,IfSend,IfSuccessCollection,collectDate)
+		values
+		<foreach collection="list" item="OperatingData" index="index"
+			separator=",">
+			(#{OperatingData.comprehensiveAssessmentID},#{OperatingData.busNumber},#{OperatingData.boardingTime},#{OperatingData.alightingTime},
+			#{OperatingData.travlledDistance},#{OperatingData.waitTime},#{OperatingData.deadheadKilometres},#{OperatingData.dealtype},
+			#{OperatingData.amountReceivable},#{OperatingData.ifSend},#{OperatingData.ifSuccessCollection},#{OperatingData.collectDate})
+		</foreach>
+
+	</insert>
+
+	<!--通过综合评测ID查询相关信息 -->
+	<select id="findByCompreId" 
+		resultType="java.util.LinkedHashMap">
+		select max(collectDate) time,count(*) count,sum(AmountReceivable)
+		pay,sum(TravlledDistance) distance from OperatingData
+		where ComprehensiveAssessmentID like #{comprehensiveAssessmentID}+'%'
+		group by ComprehensiveAssessmentID
+		
+
+	</select>
+
+
+
+</mapper> 

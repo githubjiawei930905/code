@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.epeibao.dao.VehicleMaintenanceDao">
+
+	<insert id="insertVehicleMaintenance" parameterType="com.epeibao.po.VehicleMaintenance">
+		insert into
+		VehicleMaintenance
+		(ComprehensiveAssessmentID,BusNumber,Phototype,PhotoPath,ifAssessment,AssessmentTime)
+		values(#{comprehensiveAssessmentID},#{busNumber},#{phototype},#{photoPath},#{ifAssessment}
+		,#{assessmentTime}
+		);
+
+
+
+		insert into
+		VehicleMaintenance
+		(ComprehensiveAssessmentID,Phototype,PhotoPath,ifAssessment,AssessmentTime)
+		values(#{comprehensiveAssessmentID},#{phototype},#{photoPath},#{ifAssessment}
+		,#{assessmentTime}
+		);
+
+	</insert>
+
+	<delete id="deleteVehicleMaintenance" parameterType="int">
+
+		delete from
+		vehiclemaintenance where ComprehensiveAssessmentID =
+		#{ComprehensiveAssessmentID};
+	</delete>
+
+	<update id="updateVehicleMaintenance" parameterType="com.epeibao.po.VehicleMaintenance">
+		update
+		VehicleMaintenance set
+		ComprehensiveAssessmentID=#{ComprehensiveAssessmentID},
+		Phototype=#{Phototype},
+		PhotoData=#{PhotoData},ifAssessment=#{ifAssessment},
+		AssessmentTime=#{AssessmentTime
+
+	</update>
+
+
+	<resultMap type="java.util.HashMap" id="vehiclephoto">
+		<result column="Phototype" property="Phototype" />
+		<result column="PhotoData" property="PhotoData" />
+	</resultMap>
+
+	<select id="getoneVeMaintenance" resultMap="vehiclephoto">
+		select
+		Phototype,PhotoData
+		from
+		VehicleMaintenance where
+		ComprehensiveAssessmentID = #{id,jdbcType=VARCHAR} and
+		Phototype=#{type,jdbcType=VARCHAR}
+	</select>
+	<select id="getVehicleMaintenanceById" resultType="com.epeibao.po.VehicleMaintenance">
+		select
+		*
+		from
+		VehicleMaintenance where
+		ComprehensiveAssessmentID =
+		#{ComprehensiveAssessmentID}
+	</select>
+
+
+
+
+
+
+	<select id="getVeMaintenanceByComprehensiveAssessmentID"
+		parameterType="String" resultType="java.util.LinkedHashMap">
+		select
+		Phototype,PhotoPath,ifAssessment from
+		VehicleMaintenance where
+		ComprehensiveAssessmentID =
+		#{comprehensiveAssessmentID};
+
+	</select>
+	<select id="getVeMaintenanceByBusNumber" parameterType="String"
+		resultType="java.util.LinkedHashMap">
+		select
+		Phototype,PhotoPath,ifAssessment from
+		VehicleMaintenance where
+		ComprehensiveAssessmentID =
+		#{comprehensiveAssessmentID} and
+		BusNumber
+		= #{busNumber}
+
+	</select>
+
+
+
+
+	<select id="getVeMaintenanceForIfAssessment" resultType="int">
+		select
+		ifAssessment from VehicleMaintenance where
+		ComprehensiveAssessmentID=#{comprehensiveAssessmentID} and Phototype =
+		#{photoType}
+	</select>
+</mapper>

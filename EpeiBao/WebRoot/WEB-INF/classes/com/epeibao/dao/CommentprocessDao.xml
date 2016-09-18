@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.epeibao.dao.CommentprocessDao" >
+  <resultMap id="BaseResultMap" type="com.epeibao.po.Commentprocess" >
+    <id column="CommentProcessID" property="commentprocessid" jdbcType="VARCHAR" />
+    <result column="UserID" property="userid" jdbcType="VARCHAR" />
+    <result column="CommentID" property="commentid" jdbcType="VARCHAR" />
+    <result column="OperateType" property="operatetype" jdbcType="TINYINT" />
+    <result column="CommentProcessTime" property="commentprocesstime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    CommentProcessID, UserID, CommentID, OperateType, CommentProcessTime
+  </sql>
+  
+  <select id="findById"  parameterType="java.lang.String"  resultType="com.epeibao.po.Commentprocess">
+    select 
+    <include refid="Base_Column_List" />
+    from CommentProcess
+    where CommentProcessID = #{commentprocessid,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteCommentprocess" parameterType="java.lang.String" >
+    delete from CommentProcess
+   where CommentProcessID = #{commentprocessid,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertCommentprocess" parameterType="com.epeibao.po.Commentprocess" >
+    insert into CommentProcess (CommentProcessID, UserID, CommentID, 
+      OperateType, CommentProcessTime)
+    values (#{commentprocessid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{commentid,jdbcType=VARCHAR}, 
+      #{operatetype,jdbcType=TINYINT}, #{commentprocesstime,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <update id="updataCommentprocess" parameterType="com.epeibao.po.Commentprocess" >
+    update CommentProcess
+    set UserID = #{userid,jdbcType=VARCHAR},
+      CommentID = #{commentid,jdbcType=VARCHAR},
+      OperateType = #{operatetype,jdbcType=TINYINT},
+      CommentProcessTime = #{commentprocesstime,jdbcType=TIMESTAMP}
+    where CommentProcessID = #{commentprocessid,jdbcType=VARCHAR}
+  </update>
+</mapper>

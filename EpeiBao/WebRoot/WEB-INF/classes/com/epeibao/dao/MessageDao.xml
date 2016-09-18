@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.epeibao.dao.MessageDao">
+  <resultMap id="BaseResultMap" type="com.epeibao.po.Message">
+    <id column="MessageID" jdbcType="VARCHAR" property="messageid" />
+    <result column="UserID" jdbcType="VARCHAR" property="userid" />
+    <result column="Messagedescribe" jdbcType="NVARCHAR" property="messagedescribe" />
+    <result column="MessageLevel" jdbcType="TINYINT" property="messagelevel" />
+    <result column="MessageStatus" jdbcType="TINYINT" property="messagestatus" />
+    <result column="BuildTime" jdbcType="TIMESTAMP" property="buildtime" />
+    <result column="ExpiredOfValidity" jdbcType="TIMESTAMP" property="expiredofvalidity" />
+    <result column="comeUserID" property="comeuserid" jdbcType="VARCHAR" />
+    <result column="MessageTitle" property="messagetitle" jdbcType="VARCHAR" />
+  </resultMap>
+  
+    <resultMap id="Message" type="java.util.LinkedHashMap">
+    <id column="MessageID" property="MessageID" typeHandler="com.epeibao.controller.converter.EmptyStringIfNull"  />
+    <result column="UserID" property="userid" typeHandler="com.epeibao.controller.converter.EmptyStringIfNull" />
+    <result column="Messagedescribe" property="Messagedescribe" typeHandler="com.epeibao.controller.converter.EmptyStringIfNull"  />
+    <result column="MessageLevel" property="MessageLevel" typeHandler="com.epeibao.controller.converter.EmptyStringIfNull"  />
+    <result column="MessageStatus" property="MessageStatus" typeHandler="com.epeibao.controller.converter.EmptyStringIfNull"  />
+    <result column="BuildTime" property="BuildTime" typeHandler="com.epeibao.controller.converter.EmptyStringIfNull"  />
+    <result column="ExpiredOfValidity" property="ExpiredOfValidity" typeHandler="com.epeibao.controller.converter.EmptyStringIfNull"  />
+ 	<result column="MessageTitle" property="messagetitle" typeHandler="com.epeibao.controller.converter.EmptyStringIfNull"  />
+ 	 <result column="ProcessType" property="ProcessType" typeHandler="com.epeibao.controller.converter.EmptyStringIfNull"  />
+    <result column="Processtime" property="Processtime" typeHandler="com.epeibao.controller.converter.EmptyStringIfNull"  />
+  </resultMap>
+ 
+  <sql id="Base_Column_List">
+    MessageID, UserID, Messagedescribe, MessageLevel, MessageStatus, BuildTime, ExpiredOfValidity, 
+    ComeUserID, MessageTitle, GotoUserStatus
+  </sql>
+ 
+  <select id="findById" parameterType="java.lang.String" resultMap="Message">
+   select 
+ 	m.*,mp.ProcessType,mp.Processtime,mp.RecordID
+    from Message  m join MessageProcess mp
+    on m.MessageID=mp.MessageID and m.MessageID = #{messageid,jdbcType=VARCHAR}
+  </select>
+  
+  
+  	<select id="findAll" resultType="java.util.LinkedHashMap">
+		select top(15) m.*,um.UserName
+		from Message m ,UserMessage um
+		where  m.ComeUserID in
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+		#{item}
+		</foreach>
+		and MessageStatus &lt;&gt; 4 AND m.ComeUserID=um.UserID and m.MessageID not in 
+		(select top(#{page}*15) m.MessageID
+		from Message m ,UserMessage um
+		where  m.ComeUserID in
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+		#{item}
+		</foreach>
+		AND MessageStatus  &lt;&gt; 4  AND m.ComeUserID=um.UserID
+		order by MessageLevel asc,BuildTime desc
+		)
+		 order by MessageLevel asc,BuildTime desc
+	</select>
+	
+	
+    <select id="findByMessageId" parameterType="java.lang.String" resultType="com.epeibao.po.Message">
+ 	select 
+ 	*
+    from Message 
+    where MessageID = #{messageid,jdbcType=VARCHAR}
+  </select>
+  
+    <select id="findByUserId"  resultMap="Message">
+   select top 15  m.*,mp.ProcessType,mp.Processtime
+    from Message  m join MessageProcess mp
+    on m.UserID=mp.UserID and m.MessageLevel=1 and m.UserID = #{userid,jdbcType=VARCHAR} and m.MessageID=mp.MessageID
+	and  m.MessageID not in
+    (select top (#{page}*15) m.MessageID 
+	 from Message  m join MessageProcess mp
+    on m.UserID=mp.UserID and m.MessageLevel=1  and m.UserID = #{userid,jdbcType=VARCHAR} and m.MessageID=mp.MessageID order by BuildTime desc )
+    union
+       select top 15  m.*,mp.ProcessType,mp.Processtime
+    from Message  m join MessageProcess mp
+    on m.UserID=mp.UserID and m.MessageLevel=2 and m.UserID = #{userid,jdbcType=VARCHAR} and m.MessageID=mp.MessageID
+	and  m.MessageID not in
+    (select top (#{page}*15) m.MessageID 
+	 from Message  m join MessageProcess mp
+    on m.UserID=mp.UserID and m.MessageLevel=2 and m.UserID = #{userid,jdbcType=VARCHAR} and m.MessageID=mp.MessageID order by BuildTime desc )
+    union
+       select top 15  m.*,mp.ProcessType,mp.Processtime
+    from Message  m join MessageProcess mp
+    on m.UserID=mp.UserID and m.MessageLevel=3 and m.UserID = #{userid,jdbcType=VARCHAR} and m.MessageID=mp.MessageID
+	and  m.MessageID not in
+    (select top (#{page}*15) m.MessageID 
+	 from Message  m join MessageProcess mp
+    on m.UserID=mp.UserID  and m.MessageLevel=3 and  m.UserID = #{userid,jdbcType=VARCHAR} and m.MessageID=mp.MessageID order by BuildTime desc )
+    order by MessageLevel asc,BuildTime desc
+  </select> 
+  
+  <delete id="deleteMessage" parameterType="java.lang.String">
+    delete from Message
+    where MessageID = #{messageid,jdbcType=VARCHAR}
+  </delete>
+ 
+  <insert id="insertMessage" parameterType="com.epeibao.po.Message">
+   insert into Message (MessageID, UserID, Messagedescribe, 
+      MessageLevel, MessageStatus, BuildTime, 
+      ExpiredOfValidity, ComeUserID, MessageTitle, 
+      GotoUserStatus)
+    values (#{messageid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{messagedescribe,jdbcType=NVARCHAR}, 
+      #{messagelevel,jdbcType=TINYINT}, #{messagestatus,jdbcType=TINYINT}, #{buildtime,jdbcType=TIMESTAMP}, 
+      #{expiredofvalidity,jdbcType=TIMESTAMP}, #{comeuserid,jdbcType=VARCHAR}, #{messagetitle,jdbcType=VARCHAR}, 
+      #{gotouserstatus,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="updataMessage" parameterType="com.epeibao.po.Message">
+    update Message
+    set UserID = #{userid,jdbcType=VARCHAR},
+      Messagedescribe = #{messagedescribe,jdbcType=NVARCHAR},
+      MessageLevel = #{messagelevel,jdbcType=TINYINT},
+      MessageStatus = #{messagestatus,jdbcType=TINYINT},
+      BuildTime = #{buildtime,jdbcType=TIMESTAMP},
+      ExpiredOfValidity = #{expiredofvalidity,jdbcType=TIMESTAMP},
+      ComeUserID = #{comeuserid,jdbcType=VARCHAR},
+      MessageTitle = #{messagetitle,jdbcType=VARCHAR},
+      GotoUserStatus = #{gotouserstatus,jdbcType=VARCHAR}
+    where MessageID = #{messageid,jdbcType=VARCHAR}
+  </update>
+</mapper>

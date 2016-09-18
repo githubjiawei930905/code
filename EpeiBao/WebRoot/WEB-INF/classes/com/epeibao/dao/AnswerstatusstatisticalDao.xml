@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.epeibao.dao.AnswerstatusstatisticalDao" >
+  <resultMap id="BaseResultMap" type="com.epeibao.po.Answerstatusstatistical" >
+    <id column="AnswerStatusStatisticalID" property="answerstatusstatisticalid" jdbcType="VARCHAR" />
+    <result column="ComprehensiveAssessmentID" property="comprehensiveassessmentid" jdbcType="VARCHAR" />
+    <result column="QuestionID" property="questionid" jdbcType="VARCHAR" />
+    <result column="IfQuestionOK" property="ifquestionok" jdbcType="TINYINT" />
+    <result column="VedioPath" property="vediopath" jdbcType="VARCHAR" />
+    <result column="IfVedioEligible" property="ifvedioeligible" jdbcType="TINYINT" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+     AnswerStatusStatisticalID, ComprehensiveAssessmentID, QuestionID, IfQuestionOK, VedioPath, 
+    IfVedioEligible
+  </sql>
+  
+  <select id="findById" resultType="com.epeibao.po.Answerstatusstatistical" parameterType="java.lang.String" >
+   select 
+    <include refid="Base_Column_List" />
+    from AnswerStatusStatistical
+    where AnswerStatusStatisticalID = #{answerstatusstatisticalid,jdbcType=VARCHAR}
+  </select>
+  
+    <select id="findByState" resultType="com.epeibao.po.Answerstatusstatistical" >
+   select 
+    <include refid="Base_Column_List" />
+    from AnswerStatusStatistical
+    where ComprehensiveAssessmentID = #{ComprehensiveAssessmentId,jdbcType=VARCHAR} and IfvedioEligible=#{ifvedioeligible,jdbcType=TINYINT}
+  </select>
+  
+    <delete id="deleteAnswerstatusstatistical" parameterType="java.lang.Long" >
+    delete from AnswerStatusStatistical
+    where AnswerStatusStatisticalID = #{answerstatusstatisticalid,jdbcType=VARCHAR}
+  </delete>
+  
+
+  <insert id="insertAnswerstatusstatistical" parameterType="com.epeibao.po.Answerstatusstatistical" >
+    insert into AnswerStatusStatistical (AnswerStatusStatisticalID, ComprehensiveAssessmentID, 
+      QuestionID, IfQuestionOK, VedioPath, 
+      IfVedioEligible)
+    values (#{answerstatusstatisticalid,jdbcType=VARCHAR}, #{comprehensiveassessmentid,jdbcType=VARCHAR}, 
+      #{questionid,jdbcType=VARCHAR}, #{ifquestionok,jdbcType=TINYINT}, #{vediopath,jdbcType=VARCHAR}, 
+      #{ifvedioeligible,jdbcType=TINYINT})
+  </insert>
+ 
+  <update id="updateAnswerstatusstatistical" parameterType="com.epeibao.po.Answerstatusstatistical" >
+    update AnswerStatusStatistical
+    set ComprehensiveAssessmentID = #{comprehensiveassessmentid,jdbcType=VARCHAR},
+      QuestionID = #{questionid,jdbcType=VARCHAR},
+      IfQuestionOK = #{ifquestionok,jdbcType=TINYINT},
+      VedioPath = #{vediopath,jdbcType=VARCHAR},
+      IfVedioEligible = #{ifvedioeligible,jdbcType=TINYINT}
+    where AnswerStatusStatisticalID = #{answerstatusstatisticalid,jdbcType=VARCHAR}
+  </update>
+</mapper>

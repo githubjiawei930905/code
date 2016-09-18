@@ -1,0 +1,143 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/EpeiBao/!svn/ver/494/EpeiBao/src/com/epeibao/service/impl
+END
+MessageServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/EpeiBao/!svn/ver/419/EpeiBao/src/com/epeibao/service/impl/MessageServiceImpl.java
+END
+VehicleMaintenanceServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/EpeiBao/!svn/ver/308/EpeiBao/src/com/epeibao/service/impl/VehicleMaintenanceServiceImpl.java
+END
+MessageprocessServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/EpeiBao/!svn/ver/405/EpeiBao/src/com/epeibao/service/impl/MessageprocessServiceImpl.java
+END
+PaymentAssessmentServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/EpeiBao/!svn/ver/473/EpeiBao/src/com/epeibao/service/impl/PaymentAssessmentServiceImpl.java
+END
+TrainAssessmentServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/EpeiBao/!svn/ver/387/EpeiBao/src/com/epeibao/service/impl/TrainAssessmentServiceImpl.java
+END
+AnswerstatusstatisticalServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/EpeiBao/!svn/ver/419/EpeiBao/src/com/epeibao/service/impl/AnswerstatusstatisticalServiceImpl.java
+END
+OperatingDataServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/EpeiBao/!svn/ver/409/EpeiBao/src/com/epeibao/service/impl/OperatingDataServiceImpl.java
+END
+ZongHeServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/EpeiBao/!svn/ver/472/EpeiBao/src/com/epeibao/service/impl/ZongHeServiceImpl.java
+END
+QuestionsprojectServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/EpeiBao/!svn/ver/346/EpeiBao/src/com/epeibao/service/impl/QuestionsprojectServiceImpl.java
+END
+CommentinformationServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/EpeiBao/!svn/ver/419/EpeiBao/src/com/epeibao/service/impl/CommentinformationServiceImpl.java
+END
+TrainmaterialServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/EpeiBao/!svn/ver/346/EpeiBao/src/com/epeibao/service/impl/TrainmaterialServiceImpl.java
+END
+CommentProcessServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/EpeiBao/!svn/ver/14/EpeiBao/src/com/epeibao/service/impl/CommentProcessServiceImpl.java
+END
+RolemessageServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/EpeiBao/!svn/ver/3/EpeiBao/src/com/epeibao/service/impl/RolemessageServiceImpl.java
+END
+FeedbackServcieImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/EpeiBao/!svn/ver/419/EpeiBao/src/com/epeibao/service/impl/FeedbackServcieImpl.java
+END
+CoursewareinformationServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/EpeiBao/!svn/ver/104/EpeiBao/src/com/epeibao/service/impl/CoursewareinformationServiceImpl.java
+END
+TestquestioninformationServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/EpeiBao/!svn/ver/83/EpeiBao/src/com/epeibao/service/impl/TestquestioninformationServiceImpl.java
+END
+OrganizationMessageServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/EpeiBao/!svn/ver/494/EpeiBao/src/com/epeibao/service/impl/OrganizationMessageServiceImpl.java
+END
+VehicleOriginalPhotoServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/EpeiBao/!svn/ver/242/EpeiBao/src/com/epeibao/service/impl/VehicleOriginalPhotoServiceImpl.java
+END
+ComprehensiveAssessmentServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/EpeiBao/!svn/ver/426/EpeiBao/src/com/epeibao/service/impl/ComprehensiveAssessmentServiceImpl.java
+END
+VehicleMessageServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/EpeiBao/!svn/ver/339/EpeiBao/src/com/epeibao/service/impl/VehicleMessageServiceImpl.java
+END
+UserMessageServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/EpeiBao/!svn/ver/441/EpeiBao/src/com/epeibao/service/impl/UserMessageServiceImpl.java
+END
+QuestionmessageServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/EpeiBao/!svn/ver/340/EpeiBao/src/com/epeibao/service/impl/QuestionmessageServiceImpl.java
+END
+DriverInformationServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/EpeiBao/!svn/ver/474/EpeiBao/src/com/epeibao/service/impl/DriverInformationServiceImpl.java
+END

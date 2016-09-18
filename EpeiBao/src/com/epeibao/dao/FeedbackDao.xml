@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.epeibao.dao.FeedbackDao" >
+  <resultMap id="BaseResultMap" type="com.epeibao.po.Feedback" >
+    <id column="FeedBackID" property="feedbackid" jdbcType="VARCHAR" />
+    <result column="UserID" property="userid" jdbcType="VARCHAR" />
+    <result column="ContentInfo" property="contentinfo" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+ </resultMap>
+
+  <select id="findById"  parameterType="java.lang.String" resultType="com.epeibao.po.Feedback">
+    select 
+    *
+    from FeedBack
+    where FeedBackID = #{feedBackId,jdbcType=VARCHAR}
+  </select>
+  
+    <select id="findByUserid"  parameterType="java.lang.String" resultType="com.epeibao.po.Feedback">
+    select 
+   *
+    from FeedBack
+    where UserID = #{userId,jdbcType=VARCHAR}
+  </select>
+  
+    <select id="findAll"  parameterType="int" resultType="com.epeibao.po.Feedback">
+    select top(15)
+   *
+    from FeedBack where FeedBackID not in(select top(15*#{page})
+    FeedBackID
+    from FeedBack )
+  </select>
+  
+  <delete id="deleteFeedback" parameterType="java.lang.String" >
+    delete from FeedBack
+    where FeedBackID = #{feedBackId,jdbcType=VARCHAR}
+  </delete>
+ 
+  <insert id="insertFeedback" parameterType="com.epeibao.po.Feedback" >
+    insert into FeedBack (FeedBackID, UserID, ContentInfo, 
+      CreateTime)
+    values (#{feedbackid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{contentinfo,jdbcType=VARCHAR}, 
+      #{createtime})
+  </insert>
+  
+  <update id="updateFeedback" parameterType="com.epeibao.po.Feedback" >
+    update FeedBack
+    set UserID = #{userid,jdbcType=VARCHAR},
+      ContentInfo = #{contentinfo,jdbcType=VARCHAR}
+      CreateTime =  #{createtime}
+    where FeedBackID = #{feedbackid,jdbcType=VARCHAR}
+  </update>
+</mapper>

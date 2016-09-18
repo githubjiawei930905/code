@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.epeibao.dao.QuestionsprojectDao" >
+  <resultMap id="BaseResultMap" type="com.epeibao.po.Questionsproject" >
+    <result column="QuestionsProjectID" property="questionsprojectid" jdbcType="NCHAR" />
+    <result column="CommonalityCourseware" property="commonalitycourseware" jdbcType="INTEGER" />
+    <result column="OrganizationID" property="organizationid" jdbcType="VARCHAR" />
+    <result column="CompanyCourseware" property="companycourseware" jdbcType="INTEGER" />
+    <result column="CommonalityQuestions" property="commonalityquestions" jdbcType="INTEGER" />
+    <result column="CompanyQuestions" property="companyquestions" jdbcType="INTEGER" />
+    <result column="StandardIndex" property="standardindex" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    QuestionsProjectID, CommonalityCourseware, OrganizationID, CompanyCourseware, CommonalityQuestions, 
+    CompanyQuestions, StandardIndex
+  </sql>
+  <select id="findByid" resultType="com.epeibao.po.Questionsproject" parameterType="String" >
+    select
+   *
+    from QuestionsProject
+   where QuestionsProjectID = #{questionsprojectid,jdbcType=NCHAR}
+  </select>
+  
+   <select id="findByorganizationid" resultType="com.epeibao.po.Questionsproject" parameterType="String" >
+    select
+   *
+    from QuestionsProject
+   where OrganizationID = #{organizationid,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteQuestinsProject" parameterType="String" >
+    delete from QuestionsProject
+   where QuestionsProjectID = #{questionsprojectid,jdbcType=NCHAR}
+  </delete>
+  <insert id="insertQuestinsProject" parameterType="com.epeibao.po.Questionsproject" >
+    insert into QuestionsProject (QuestionsProjectID, CommonalityCourseware, 
+      OrganizationID, CompanyCourseware, CommonalityQuestions, 
+      CompanyQuestions, StandardIndex)
+    values (#{questionsprojectid,jdbcType=NCHAR}, #{commonalitycourseware,jdbcType=INTEGER}, 
+      #{organizationid,jdbcType=VARCHAR}, #{companycourseware,jdbcType=INTEGER}, #{commonalityquestions,jdbcType=INTEGER}, 
+      #{companyquestions,jdbcType=INTEGER}, #{standardindex,jdbcType=INTEGER})
+  </insert>
+ 
+  <update id="updateQuestinsProject" parameterType="com.epeibao.po.Questionsproject" >
+    update QuestionsProject
+    set 
+      CommonalityCourseware = #{commonalitycourseware,jdbcType=INTEGER},
+      OrganizationID = #{organizationid,jdbcType=VARCHAR},
+      CompanyCourseware = #{companycourseware,jdbcType=INTEGER},
+      CommonalityQuestions = #{commonalityquestions,jdbcType=INTEGER},
+      CompanyQuestions = #{companyquestions,jdbcType=INTEGER},
+      StandardIndex = #{standardindex,jdbcType=INTEGER}
+    where QuestionsProjectID = #{questionsprojectid,jdbcType=NCHAR}
+  </update>
+</mapper>

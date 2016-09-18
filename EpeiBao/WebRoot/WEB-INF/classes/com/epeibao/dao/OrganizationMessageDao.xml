@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.epeibao.dao.OrganizationMessageDao">
+	<sql id="Base_Column_List">
+		OrganizationID, ParentOrganizationID, OrganizationName,
+		OrganizationLevel,
+		OfficerNumber,
+		ServicePhoneNumber, OwnerID,
+		phototypeRule, QuestionsProjectID
+	</sql>
+
+	<insert id="insertOrganizationMessage" parameterType="com.epeibao.po.OrganizationMessage">
+		insert into
+		OrganizationMessage
+		(OrganizationID,ParentOrganizationID,OrganizationName,OrganizationLevel,
+		OfficerNumber,ServicePhoneNumber,OwnerID)
+		values
+		(#{organizationID},#{parentOrganizationID},#{organizationName},#{organizationLevel},#{officerNumber},
+		#{servicePhoneNumber},#{ownerID})
+	</insert>
+
+
+	<update id="updateOrganizationMessage" parameterType="com.epeibao.po.OrganizationMessage">
+		update
+		OrganizationMessage
+		set ParentOrganizationID=#{parentOrganizationID},
+		OrganizationName=#{organizationName},
+		OrganizationLevel=#{organizationLevel},
+		OfficerNumber=#{officerNumber},
+		ServicePhoneNumber=#{servicePhoneNumber},
+		OwnerID=#{ownerID}
+		where
+		OrganizationID=#{organizationID},
+	</update>
+
+
+	<delete id="deleteOrganizationMessage" parameterType="java.lang.String">
+		delete from
+		OrganizationMessage
+		where OrganizationID = #{organizationID}
+	</delete>
+
+
+	<select id="findById" resultType="com.epeibao.po.OrganizationMessage"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from OrganizationMessage
+		where OrganizationID = #{organizationid}
+	</select>
+
+	<select id="findByOrganizationId" resultType="java.lang.String"
+		parameterType="java.lang.String">
+		select o.OrganizationID
+		from OrganizationMessage o
+		,UserMessage um ,RoleMessage
+		rm,UserRoleRelation usr
+		WHERE
+		o.OrganizationID in (
+		select OrganizationID from OrganizationMessage
+		where OrganizationID Like
+		#{organizationid}+'%')
+		and o.OrganizationID=
+		um.OrganizationID and um.UserID=usr.UserID and
+		rm.RoleID=usr.RoleID
+		and
+		rm.RoleName=#{name}
+	</select>
+
+	<select id="findByUserId" resultType="java.lang.String"
+		parameterType="java.lang.String">
+		select um.UserID
+		from OrganizationMessage o ,UserMessage
+		um ,RoleMessage
+		rm,UserRoleRelation usr
+		WHERE o.OrganizationID in (
+		select OrganizationID from OrganizationMessage where OrganizationID
+		Like
+		#{organizationid}+'%')
+		and o.OrganizationID= um.OrganizationID and
+		um.UserID=usr.UserID and
+		rm.RoleID=usr.RoleID
+		and rm.RoleName=#{name}
+	</select>
+
+
+
+	<select id="getByOrganizationId" resultType="java.util.LinkedHashMap"
+		parameterType="java.lang.String">
+		select OrganizationID,OrganizationName
+		from
+		OrganizationMessage
+		where ParentOrganizationID = #{organizationid} and
+		OrganizationLevel &lt;
+		&gt; 6
+	</select>
+
+
+	<select id="getPhototypeRuleByOrganizationID" parameterType="String"
+		resultType="String">
+		select PhototypeRule from organizationMessage where
+		OrganizationID=#{organizationID};
+
+	</select>
+	<select id="getOrganizationIDSByParentOrganizationID"
+		parameterType="String" resultType="java.util.LinkedHashMap">
+		select OrganizationID from
+		OrganizationMessage where ParentOrganizationID =
+		#{parentOrganizationID}
+	</select>
+
+</mapper>

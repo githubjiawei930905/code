@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/EpeiBao/!svn/ver/495/EpeiBao/config
+END
+db.properties
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/EpeiBao/!svn/ver/495/EpeiBao/config/db.properties
+END
+log4j.properties
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/EpeiBao/!svn/ver/3/EpeiBao/config/log4j.properties
+END
+ehcache.xml
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/EpeiBao/!svn/ver/3/EpeiBao/config/ehcache.xml
+END

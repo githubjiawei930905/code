@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.epeibao.dao.CoursewareinformationDao" >
+  <resultMap id="BaseResultMap" type="com.epeibao.po.Coursewareinformation" >
+    <id column="CoursewareID" property="coursewareid" jdbcType="VARCHAR" />
+    <result column="TestQuestionID" property="testquestionid" jdbcType="VARCHAR" />
+    <result column="UserID" property="userid" jdbcType="VARCHAR" />
+    <result column="CoursewareName" property="coursewarename" jdbcType="NVARCHAR" />
+    <result column="CoursewareType" property="coursewaretype" jdbcType="NVARCHAR" />
+    <result column="CoursewarePath" property="coursewarepath" jdbcType="NVARCHAR" />
+    <result column="AbstractInfo" property="abstractinfo" jdbcType="NVARCHAR" />
+    <result column="BuildTime" property="buildtime" jdbcType="TIMESTAMP" />
+    <result column="ReviseTime" property="revisetime" jdbcType="TIMESTAMP" />
+    <result column="NoteInfo" property="noteinfo" jdbcType="NVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CoursewareID, TestQuestionID, UserID, CoursewareName, CoursewareType, CoursewarePath, 
+    AbstractInfo, BuildTime, ReviseTime, NoteInfo
+  </sql>
+  
+  <select id="findByid" resultType="com.epeibao.po.Coursewareinformation" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from CoursewareInformation
+    where CoursewareID = #{coursewareid,jdbcType=VARCHAR}
+  </select>
+  
+      <select id="findSuiji" resultType="com.epeibao.po.Coursewareinformation"  >
+    select top(3)
+    <include refid="Base_Column_List" />
+    from CoursewareInformation
+    Order By NEWID()
+    
+ 
+  </select>
+  
+  <delete id="deleteCoursewareinformation" parameterType="java.lang.String" >
+    delete from CoursewareInformation
+    where CoursewareID = #{coursewareid,jdbcType=VARCHAR}
+  </delete>
+ 
+  <insert id="insterCoursewareinformation" parameterType="com.epeibao.po.Coursewareinformation" >
+   insert into CoursewareInformation (CoursewareID, TestQuestionID, UserID, 
+      CoursewareName, CoursewareType, CoursewarePath, 
+      AbstractInfo, BuildTime, ReviseTime, 
+      NoteInfo)
+    values (#{coursewareid,jdbcType=VARCHAR}, #{testquestionid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, 
+      #{coursewarename,jdbcType=NVARCHAR}, #{coursewaretype,jdbcType=NVARCHAR}, #{coursewarepath,jdbcType=NVARCHAR}, 
+      #{abstractinfo,jdbcType=NVARCHAR}, #{buildtime,jdbcType=TIMESTAMP}, #{revisetime,jdbcType=TIMESTAMP}, 
+      #{noteinfo,jdbcType=NVARCHAR})
+  </insert>
+  
+  <update id="updateCoursewareinformation" parameterType="com.epeibao.po.Coursewareinformation" >
+     update CoursewareInformation
+    set TestQuestionID = #{testquestionid,jdbcType=VARCHAR},
+      UserID = #{userid,jdbcType=VARCHAR},
+      CoursewareName = #{coursewarename,jdbcType=NVARCHAR},
+      CoursewareType = #{coursewaretype,jdbcType=NVARCHAR},
+      CoursewarePath = #{coursewarepath,jdbcType=NVARCHAR},
+      AbstractInfo = #{abstractinfo,jdbcType=NVARCHAR},
+      BuildTime = #{buildtime,jdbcType=TIMESTAMP},
+      ReviseTime = #{revisetime,jdbcType=TIMESTAMP},
+      NoteInfo = #{noteinfo,jdbcType=NVARCHAR}
+    where CoursewareID = #{coursewareid,jdbcType=VARCHAR}
+  </update>
+</mapper>

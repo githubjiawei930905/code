@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.epeibao.dao.UsermessageDao">
+	<resultMap id="BaseResultMap" type="com.epeibao.po.Usermessage">
+		<result column="userID" property="userid" jdbcType="VARCHAR" />
+		<result column="OrganizationID" property="organizationid"
+			jdbcType="VARCHAR" />
+		<result column="LoginID" property="loginid" jdbcType="VARCHAR" />
+		<result column="LoginPassword" property="loginpassword"
+			jdbcType="VARCHAR" />
+		<result column="UserName" property="username" jdbcType="VARCHAR" />
+		<result column="PhoneNumber" property="phonenumber" jdbcType="VARCHAR" />
+		<result column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="LoginTime" property="logintime" jdbcType="TIMESTAMP" />
+		<result column="LastLoginTime" property="lastlogintime"
+			jdbcType="TIMESTAMP" />
+		<result column="LogExpiredTime" property="logexpiredtime"
+			jdbcType="TIMESTAMP" />
+		<result column="Token" property="token" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="sijimap" type="java.util.LinkedHashMap">
+		<result column="userID" property="userid"
+			typeHandler="com.epeibao.controller.converter.EmptyStringIfNull" />
+		<result column="Token" property="Token"
+			typeHandler="com.epeibao.controller.converter.EmptyStringIfNull" />
+		<result column="DriverName" property="DriverName"
+			typeHandler="com.epeibao.controller.converter.EmptyStringIfNull" />
+		<result column="BusNumber" property="BusNumber"
+			typeHandler="com.epeibao.controller.converter.EmptyStringIfNull" />
+		<result column="PhoneNumber" property="PhoneNumber"
+			typeHandler="com.epeibao.controller.converter.EmptyStringIfNull" />
+		<result column="DriverPhoto" property="DriverPhoto"
+			typeHandler="com.epeibao.controller.converter.EmptyStringIfNull" />
+		<result column="VehicleTeamID" property="VehicleTeamID"
+			typeHandler="com.epeibao.controller.converter.EmptyStringIfNull" />
+		<result column="TaximeterDeadline" property="TaximeterDeadline"
+			typeHandler="com.epeibao.controller.converter.EmptyStringIfNull" />
+		<result column="OwnerID" property="OwnerID"
+			typeHandler="com.epeibao.controller.converter.EmptyStringIfNull" />
+			
+		<result column="OrganizationID" property="OrganizationID"
+			typeHandler="com.epeibao.controller.converter.EmptyStringIfNull" />
+	</resultMap>
+
+	<resultMap id="loginmap" type="java.util.LinkedHashMap">
+		<result column="LoginPassword" property="LoginPassword"
+			typeHandler="com.epeibao.controller.converter.EmptyStringIfNull" />
+		<result column="Token" property="Token"
+			typeHandler="com.epeibao.controller.converter.EmptyStringIfNull" />
+		<result column="RoleName" property="RoleName"
+			typeHandler="com.epeibao.controller.converter.EmptyStringIfNull" />
+	</resultMap>
+
+	<resultMap id="parentmap" type="java.util.LinkedHashMap">
+		<result column="ParentOrganizationID" property="ParentOrganizationID"
+			typeHandler="com.epeibao.controller.converter.EmptyStringIfNull" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		userID, OrganizationID, LoginID, LoginPassword, UserName,
+		PhoneNumber, uuid,
+		LoginTime,
+		LastLoginTime, LogExpiredTime, Token
+	</sql>
+
+	<select id="findByUserId" resultType="com.epeibao.po.Usermessage"
+		parameterType="String">
+		select
+		<include refid="Base_Column_List" />
+		from usermessage
+		where userID = #{userid,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findParentOrganizationID" parameterType="String"
+		resultMap="parentmap">
+
+		select userid from UserMessage where OrganizationID =(
+		select
+		o.ParentOrganizationID
+		from usermessage u,OrganizationMessage o
+		where UserID = #{userid,jdbcType=VARCHAR} and u.OrganizationID =
+		o.OrganizationID)
+	</select>
+	
+	  <select id="findMessageByDuquState"  resultType="java.util.LinkedHashMap">
+ 	select 
+ 	 top(15) *
+	  from CompanyVehicleDriverRelation 
+   	where BusNumber = (select  distinct  co.BusNumber
+    from MessageProcess mp,UserMessage um,DriverInformation d,CompanyVehicleDriverRelation co
+   	where mp.MessageID = #{messageid} and mp.ProcessType =0 and um.UserID=mp.UserID and um.UserID=d.DriverID and co.BusNumber=d.BusNumber
+	) AND  BusNumber NOT IN(
+	select 
+ 	 top(15*#{page}) BusNumber
+	  from CompanyVehicleDriverRelation 
+   	where BusNumber = (select  distinct  co.BusNumber
+    from MessageProcess mp,UserMessage um,DriverInformation d,CompanyVehicleDriverRelation co
+   	where mp.MessageID = #{messageid} and mp.ProcessType =0 and um.UserID=mp.UserID and um.UserID=d.DriverID and co.BusNumber=d.BusNumber
+	)
+	) 
+	order by BusNumber
+  </select>
+
+	<select id="login" resultType="com.epeibao.po.Usermessage"
+		parameterType="String">
+		select
+		*
+		from usermessage
+		where LoginID =
+		#{LoginID,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findByLoginId" resultMap="sijimap" parameterType="String">
+		select
+		u.userID,u.Token,d.DriverName,d.BusNumber,d.PhoneNumber,d.DriverPhoto,c.VehicleTeamID,co.TaximeterDeadline
+		,o.OwnerID,o.OrganizationID
+		from usermessage u,DriverInformation
+		d,CompanyVehicleDriverRelation
+		c,OrganizationMessage
+		o,ComprehensiveAssessment co
+		where LoginID =
+		#{LoginID,jdbcType=VARCHAR} and u.userID=d.DriverID and
+		d.DriverID=c.DriverID and u.OrganizationID=o.OrganizationID and
+		co.DriverID=u.UserID
+
+	</select>
+
+	<select id="findByTelephone" resultType="com.epeibao.po.Usermessage"
+		parameterType="String">
+		select
+		<include refid="Base_Column_List" />
+		from usermessage
+		where PhoneNumber = #{phonenumber,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findByOrganizationId" resultType="com.epeibao.po.Usermessage"
+		parameterType="String">
+		select
+		<include refid="Base_Column_List" />
+		from usermessage
+		where OrganizationID =
+		#{organizationid,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findMohuByOrganizationId" resultType="com.epeibao.po.Usermessage"
+		parameterType="String">
+		select
+		<include refid="Base_Column_List" />
+		from usermessage
+		where OrganizationID like 
+		#{organizationid,jdbcType=VARCHAR} +"%"
+	</select>
+
+	<delete id="deleteUserMessage" parameterType="String">
+		delete from
+		usermessage
+		where userID = #{userid,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insertUserMessage" parameterType="com.epeibao.po.Usermessage">
+		insert into
+		usermessage (userID, OrganizationID, LoginID,
+		LoginPassword, UserName,
+		PhoneNumber,
+		uuid, LoginTime, LastLoginTime,
+		LogExpiredTime, Token)
+		values (#{userid,jdbcType=VARCHAR},
+		#{organizationid,jdbcType=VARCHAR},
+		#{loginid,jdbcType=VARCHAR},
+		#{loginpassword,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+		#{phonenumber,jdbcType=VARCHAR},
+		#{uuid,jdbcType=VARCHAR},
+		#{logintime,jdbcType=TIMESTAMP},
+		#{lastlogintime,jdbcType=TIMESTAMP},
+		#{logexpiredtime,jdbcType=TIMESTAMP}, #{token,jdbcType=VARCHAR})
+	</insert>
+
+	<update id="updateUserMessage" parameterType="com.epeibao.po.Usermessage">
+		update usermessage
+		set
+		OrganizationID = #{organizationid,jdbcType=VARCHAR},
+		LoginID =
+		#{loginid,jdbcType=VARCHAR},
+		LoginPassword =
+		#{loginpassword,jdbcType=VARCHAR},
+		UserName =
+		#{username,jdbcType=VARCHAR},
+		PhoneNumber =
+		#{phonenumber,jdbcType=VARCHAR},
+		uuid = #{uuid,jdbcType=VARCHAR},
+		LoginTime = #{logintime,jdbcType=TIMESTAMP},
+		LastLoginTime =
+		#{lastlogintime,jdbcType=TIMESTAMP},
+		LogExpiredTime =
+		#{logexpiredtime,jdbcType=TIMESTAMP},
+		Token = #{token,jdbcType=VARCHAR}
+		where userID = #{userid,jdbcType=VARCHAR}
+	</update>
+
+	<select id="getJurisdictionLevelByLoginId" parameterType="String"
+		resultType="java.util.LinkedHashMap">
+
+		select JurisdictionLevel from JurisdictionMessage where
+		JurisdictionID = (
+		select JurisdictionID from UserJurisdictionRelation
+		where UserID =
+		(select UserID from UserMessage where LoginID =
+		#{loginID}));
+	</select>
+
+
+	<select id="getUserMessage" parameterType="String"
+		resultType="java.util.LinkedHashMap">
+		select UserID,UserName,Token,OrganizationID,
+		(select OrganizationName from OrganizationMessage o where u.OrganizationID =
+		o.OrganizationID) userOrganization
+		from UserMessage u where LoginID = #{loginID}
+	</select>
+
+	<select id="findByBusNumber" resultType="java.util.LinkedHashMap"
+		parameterType="String">
+		select   UM.PhoneNumber,UM.UserName   
+		from  DriverInformation d,UserMessage um
+		where d.BusNumber=#{busNumber} AND D.DriverID = UM.UserID
+	</select>
+</mapper>

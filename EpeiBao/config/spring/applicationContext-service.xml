@@ -1,0 +1,59 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
+	<!-- 用户管理 -->
+	<bean id="UserMessageService" class="com.epeibao.service.impl.UserMessageServiceImpl" />
+	<bean id="RolemessageService" class="com.epeibao.service.impl.RolemessageServiceImpl"></bean>
+	<!-- 消息管理 -->
+	<bean id="MessageService" class="com.epeibao.service.impl.MessageServiceImpl" />
+	<bean id="MessageprocessService" class="com.epeibao.service.impl.MessageprocessServiceImpl"></bean>
+	<!-- 评论 -->
+	<bean id="CommentinformationService" class="com.epeibao.service.impl.CommentinformationServiceImpl"></bean>
+	<bean id="CommentProcessService" class="com.epeibao.service.impl.CommentProcessServiceImpl"></bean>
+	<!-- 试题管理 -->
+	<bean id="QuestionsprojectService" class="com.epeibao.service.impl.QuestionsprojectServiceImpl"></bean>
+	<bean id="TrainmaterialService" class="com.epeibao.service.impl.TrainmaterialServiceImpl"></bean>
+	<bean id="AnswerstatusstatisticalService"
+		class="com.epeibao.service.impl.AnswerstatusstatisticalServiceImpl"></bean>
+	<bean id="CoursewareinformationService"
+		class="com.epeibao.service.impl.CoursewareinformationServiceImpl"></bean>
+	<bean id="QuestionmessageService" class="com.epeibao.service.impl.QuestionmessageServiceImpl"></bean>
+	<bean id="TestquestioninformationService"
+		class="com.epeibao.service.impl.TestquestioninformationServiceImpl"></bean>
+
+	<bean id="ComprehensiveAssessmentService"
+		class="com.epeibao.service.impl.ComprehensiveAssessmentServiceImpl"></bean>
+
+	<!-- 车辆维护图片上传 -->
+	<bean id="VehicleMaintenanceService" class="com.epeibao.service.impl.VehicleMaintenanceServiceImpl" />
+	<bean id="VehicleMessageService" class="com.epeibao.service.impl.VehicleMessageServiceImpl" />
+	<bean id="VehicleOriginalPhotoService"
+		class="com.epeibao.service.impl.VehicleOriginalPhotoServiceImpl" />
+
+	<bean id="OperatingDataServices" class="com.epeibao.service.impl.OperatingDataServiceImpl"></bean>
+
+	<bean id="DriverInformationService" class="com.epeibao.service.impl.DriverInformationServiceImpl" />
+	<!--考核信息-->
+	<bean id="TrainAssessmentService" class="com.epeibao.service.impl.TrainAssessmentServiceImpl" />
+   
+	<bean id="OrganizationMessageService" class="com.epeibao.service.impl.OrganizationMessageServiceImpl" />
+	<bean id="PaymentAssessmentService" class="com.epeibao.service.impl.PaymentAssessmentServiceImpl" />
+
+	<bean id="ZongHeService" class="com.epeibao.service.impl.ZongHeServiceImpl" />
+	
+	
+	<!-- 反馈意见 -->
+	<!-- <bean id="FeedbackServcie" class="com.epeibao.service.impl.FeedbackServcieImpl"></bean> -->
+
+</beans>
