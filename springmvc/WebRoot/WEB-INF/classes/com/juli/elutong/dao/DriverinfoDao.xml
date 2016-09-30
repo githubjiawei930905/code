@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juli.elutong.dao.DriverinfoDao">
+	<sql id="Base_Column_List" >
+    DRIVERID, PASSWORD, CARID, DRIVERNAME, DRIVERIDCARDNUM, DRIVERSEX, FIRSTLICENSE, 
+    DRIVERPHONENUM, DEVICEID, DRIVERSATATE
+  </sql>
+	
+	<insert id="insertDriverinfo" parameterType="com.juli.elutong.po.Driverinfo">
+		insert into DRIVERINFO (DRIVERID, PASSWORD, CARID, 
+      DRIVERNAME, DRIVERIDCARDNUM, DRIVERSEX, 
+      FIRSTLICENSE, DRIVERPHONENUM, DEVICEID, 
+      DRIVERSATATE)
+    values (#{driverid}, #{password}, #{carid,jdbcType=OTHER}, 
+      #{drivername}, #{driveridcardnum}, #{driversex}, 
+      #{firstlicense}, #{driverphonenum}, #{deviceid}, 
+      #{driversatate})
+	</insert>
+
+	<delete id="deleteDriverinfo" parameterType="java.lang.Integer">
+		delete from
+		Driverinfo
+		WHERE driverid = #{driverid}
+	</delete>
+	<update id="updateDriverinfo" parameterType="com.juli.elutong.po.Driverinfo">
+		 update DRIVERINFO
+    <set >
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="carid != null" >
+        CARID = #{carid,jdbcType=OTHER},
+      </if>
+      <if test="drivername != null" >
+        DRIVERNAME = #{drivername,jdbcType=OTHER},
+      </if>
+      <if test="driveridcardnum != null" >
+        DRIVERIDCARDNUM = #{driveridcardnum,jdbcType=VARCHAR},
+      </if>
+      <if test="driversex != null" >
+        DRIVERSEX = #{driversex,jdbcType=DECIMAL},
+      </if>
+      <if test="firstlicense != null" >
+        FIRSTLICENSE = #{firstlicense,jdbcType=DATE},
+      </if>
+      <if test="driverphonenum != null" >
+        DRIVERPHONENUM = #{driverphonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null" >
+        DEVICEID = #{deviceid,jdbcType=VARCHAR},
+      </if>
+      <if test="driversatate != null" >
+        DRIVERSATATE = #{driversatate,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where DRIVERID = #{driverid,jdbcType=DECIMAL}
+	</update>
+	<select id="getDriverinfo" parameterType="java.lang.Integer"
+		resultType="com.juli.elutong.po.Driverinfo">
+		select
+		<include refid="Base_Column_List" />
+		from DRIVERINFO where DRIVERID = #{driverid}
+	</select>
+
+	<select id="findByPhonenum" parameterType="java.lang.String"
+		resultType="com.juli.elutong.po.Driverinfo">
+		select * from DRIVERINFO where driverphonenum = #{driverphonenum,jdbcType=VARCHAR}
+	</select>
+</mapper>

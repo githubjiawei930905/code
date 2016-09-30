@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juli.elutong.dao.PassengerinfoDao">
+
+  
+  <sql id="Base_Column_List" >
+    PASSENGERID, PHONENUM, PASSWORD, NAME, IDCARDNUM, ISOWNER, PASSENGERLEVEL, PHOTO, 
+    SEX, AGE, BUSINESS, COMPANY, SIGN, DEVICEID
+  </sql>
+  <sql id='TABLE_SEQUENCE'>passengerinfoId.nextval</sql>
+  <select id="findByid" parameterType="int" resultType="com.juli.elutong.po.Passengerinfo">
+    select 
+    <include refid="Base_Column_List" />
+    from PASSENGERINFO
+    where PASSENGERID = #{passengerId,jdbcType=INTEGER}
+  </select>
+  
+    <select id="findByPhonenum" parameterType="String" resultType="com.juli.elutong.po.Passengerinfo">
+    select 
+    <include refid="Base_Column_List" />
+    from PASSENGERINFO
+    where PHONENUM = #{phonenum,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deletePassengerinfo" parameterType="int">
+    delete from PASSENGERINFO
+    where PASSENGERID = #{passengerId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insterPassengerinfo" parameterType="com.juli.elutong.po.Passengerinfo" >
+    insert into PASSENGERINFO (PASSENGERID, PHONENUM, PASSWORD, 
+      NAME, IDCARDNUM, ISOWNER, 
+      PASSENGERLEVEL, PHOTO, SEX, 
+      AGE, BUSINESS, COMPANY, 
+      SIGN, DEVICEID)
+    values (#{passengerid,jdbcType=DECIMAL}, #{phonenum,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{name,jdbcType=OTHER}, #{idcardnum,jdbcType=VARCHAR}, #{isowner,jdbcType=DECIMAL}, 
+      #{passengerlevel,jdbcType=DECIMAL}, #{photo,jdbcType=VARCHAR}, #{sex,jdbcType=DECIMAL}, 
+      #{age,jdbcType=DECIMAL}, #{business,jdbcType=OTHER}, #{company,jdbcType=VARCHAR}, 
+      #{sign,jdbcType=VARCHAR}, #{deviceid,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.juli.elutong.po.Passengerinfo">
+    update PASSENGERINFO
+    set PHONENUM = #{phonenum,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=OTHER},
+      IDCARDNUM = #{idcardnum,jdbcType=VARCHAR},
+      ISOWNER = #{isowner,jdbcType=DECIMAL},
+      PASSENGERLEVEL = #{passengerlevel,jdbcType=DECIMAL},
+      PHOTO = #{photo,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=DECIMAL},
+      AGE = #{age,jdbcType=DECIMAL},
+      BUSINESS = #{business,jdbcType=OTHER},
+      COMPANY = #{company,jdbcType=VARCHAR},
+      SIGN = #{sign,jdbcType=VARCHAR},
+      DEVICEID = #{deviceid,jdbcType=VARCHAR}
+    where PASSENGERID = #{passengerid,jdbcType=DECIMAL}
+  </update>
+</mapper>

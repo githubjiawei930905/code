@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juli.elutong.dao.AuthinfoDao">
+
+	<sql id='TABLE_NAME'>AUTHINFO</sql>
+ 	<sql id='TABLE_SEQUENCE'>authinfoId.nextval</sql>
+ 	
+	<insert id="insertAuthinfo" parameterType="com.juli.elutong.po.Authinfo" >
+	
+		insert into <include refid="TABLE_NAME" />  (AUTHID,PHONENUM,AUTHCODE)
+		values (<include refid="TABLE_SEQUENCE" />,#{phonenum},#{authcode})
+	</insert>
+	<delete id="deleteAuthinfo" parameterType="java.lang.Integer">
+
+		delete from AUTHINFO
+		WHERE AUTHID= #{authid}
+	</delete>
+
+
+	<select id="isPass" parameterType="com.juli.elutong.po.Authinfo"
+		resultType="com.juli.elutong.po.Authinfo">
+		select * from authinfo where phonenum = #{phonenum}
+		and authcode =
+		#{authcode}
+	</select>
+
+</mapper>

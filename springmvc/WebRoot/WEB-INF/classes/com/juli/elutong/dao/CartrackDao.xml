@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juli.elutong.dao.CartrackDao">
+	
+	 <sql id="Base_Column_List" >
+    TRACKID, LONGITUDE, LATITUDE, USERID, USERTYPE, BUILDTIME, ORDERID
+  </sql>
+	<insert id="insertCartrack" parameterType="com.juli.elutong.po.Cartrack">
+		insert into CARTRACK (TRACKID, LONGITUDE, LATITUDE, 
+      USERID, USERTYPE, BUILDTIME, 
+      ORDERID)
+		values
+		(cartrackinfoId.nextval,#{Integeritude},#{latitude},#{userid},#{usertype},#{buildtime},#{orderid})
+	</insert>
+	
+	<delete id="deleteCartrack" parameterType="java.lang.Integer">
+
+		delete from CARTRACK
+		WHERE trackid = #{trackid}
+	</delete>
+
+	<select id="getCartrack" parameterType="java.lang.Integer"
+		resultType="com.juli.elutong.po.Cartrack">
+
+		select * from CARTRACK where trackid = #{trackid}
+	</select>
+
+	<select id="findByUsertype" 
+		resultType="com.juli.elutong.po.Cartrack">
+
+		select * from CARTRACK where userid = #{userid} and usertype = #{usertype}
+	</select>	
+	
+	<select id="findByCurrentlyTime" 
+		resultType="com.juli.elutong.po.Cartrack">
+	select * from (select * from CARTRACK where userid = #{userid} and usertype = #{usertype}  
+    order by buildtime desc) where  rownum=1 
+	</select>
+	
+	
+	<insert id="insertMenyCartrack" parameterType="com.juli.elutong.po.Cartrack">
+		insert into  CARTRACK (TRACKID, LONGITUDE, LATITUDE, USERID, USERTYPE, BUILDTIME, ORDERID) 
+		select  cartrackinfoId.nextval, t.c1,t.c2,t.c3,t.c4,t.c5,t.c6
+		from
+		<foreach  collection="list" item="item" open="(" close=")" index="index" separator="union">  
+		 select
+	     #{item.longitude,jdbcType=INTEGER} c1, #{item.latitude,jdbcType=INTEGER} c2, 
+         #{item.userid,jdbcType=INTEGER} c3, #{item.usertype,jdbcType=INTEGER} c4, to_timestamp(#{item.buildtime,jdbcType=VARCHAR}, 'yyyy-mm-dd hh24:mi:ss:ff') c5
+         ,#{item.orderid,jdbcType=INTEGER} c6
+		from dual  
+		</foreach> t
+	</insert>
+	
+	<update id="updateMenyCartrack" parameterType="com.juli.elutong.po.Cartrack" >
+	    begin  
+	<foreach collection="list" item="item" index="index" separator=";">
+    update CARTRACK
+    set LONGITUDE = #{item.longitude,jdbcType=INTEGER},
+      LATITUDE = #{item.latitude,jdbcType=INTEGER},
+      USERID = #{item.userid,jdbcType=INTEGER},
+      USERTYPE = #{item.usertype,jdbcType=INTEGER},
+      BUILDTIME = to_timestamp(#{item.buildtime,jdbcType=VARCHAR}, 'yyyy-mm-dd hh24:mi:ss:ff'),
+      ORDERID = #{item.orderid,jdbcType=INTEGER}
+    where TRACKID = #{item.trackid,jdbcType=INTEGER}
+    </foreach>
+     ;end;
+  </update>
+	
+</mapper>

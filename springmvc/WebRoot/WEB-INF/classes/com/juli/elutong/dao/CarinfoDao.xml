@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juli.elutong.dao.CarinfoDao">
+	<insert id="insertCarinfo" parameterType="com.juli.elutong.po.Carinfo">
+
+		insert into CARINFO
+		values
+		(carinfoId.nextval,#{color},#{BRAND},#{CARSERIES},#{BUYDATE});
+	</insert>
+	<delete id="deleteCarinfo" parameterType="java.lang.String">
+
+		delete from CARINFO
+		WHERE CARID = #{carId}
+	</delete>
+
+	<update id="updateCarinfo" parameterType="com.juli.elutong.po.Carinfo">
+		update Carinfo
+		<set>
+			<if test="COLOR != null">
+				COLOR = #{COLOR},
+			</if>
+			<if test="BRAND != null">
+				BRAND = #{BRAND},
+			</if>
+			<if test="CARSERIES != null">
+				CARSERIES = #{CARSERIES},
+			</if>
+			<if test="BUYDATE != null">
+				BUYDATE = #{BUYDATE},
+			</if>
+		</set>
+		where carid = #{carid}
+	</update>
+	<select id="getCarinfo" parameterType="java.lang.String"
+		resultType="com.juli.elutong.po.Carinfo">
+
+		select * from carinfo where carid = #{carid};
+	</select>
+	<select id="returnCarinfo" parameterType="java.lang.Integer"
+		resultType="java.util.LinkedHashMap">
+		select c.carid,color,brand,carseries,driverphonenum
+		from
+		carinfo c,driverinfo d where d.carid = c.carid and driverId =
+		(select
+		driverid from orderinfo where orderid = #{orderid})
+	</select>
+</mapper>
