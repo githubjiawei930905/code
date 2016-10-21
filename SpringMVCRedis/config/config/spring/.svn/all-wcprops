@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/DiDi/!svn/ver/66/ELuTong/config/spring
+END
+applicationContext-transation.xml
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/DiDi/!svn/ver/55/ELuTong/config/spring/applicationContext-transation.xml
+END
+springmvc.xml
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/DiDi/!svn/ver/66/ELuTong/config/spring/springmvc.xml
+END
+applicationContext-dao.xml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/DiDi/!svn/ver/55/ELuTong/config/spring/applicationContext-dao.xml
+END
